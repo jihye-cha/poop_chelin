@@ -341,24 +341,24 @@ function renderReviews() {
       <div class="rv-card">
         <div class="rv-top">
           <div class="rv-user">
-            <span style="font-weight: 800; font-size: 15px; color: var(--g900);">${rv.user}</span>
+            <span style="font-weight: 800; font-size: 15px;">${rv.user}</span>
             <span class="rv-type-tag">${rv.type}</span>
           </div>
-          <span class="rv-date">${rv.date}</span>
+          <span class="rv-date" style="font-size: 11px; color: var(--g400);">${rv.date}</span>
         </div>
 
         <div class="rv-badge-wrap">
-          <div class="rv-star-badge"><span>🍽</span> ${rv.rating ? rv.rating.taste.toFixed(1) : '5.0'}</div>
-          <div class="rv-star-badge"><span>🚽</span> ${rv.rating ? rv.rating.toilet.toFixed(1) : '5.0'}</div>
+          <div class="rv-star-badge">🍽 ${rv.rating ? rv.rating.taste.toFixed(1) : '5.0'}</div>
+          <div class="rv-star-badge">🚽 ${rv.rating ? rv.rating.toilet.toFixed(1) : '5.0'}</div>
         </div>
 
-        <div class="kw-row">
-          ${(rv.selectedTags || ['속이편해요', '깨끗해요']).map(tag => `
-            <span class="nkw pos" style="font-size: 11px;">#${tag.replace('#','')}</span>
+        <div class="kw-row" style="margin-bottom: 12px;">
+          ${(rv.selectedTags || ['#속이편해요', '#깨끗해요']).map(tag => `
+            <span class="nkw pos" style="font-size: 11px; padding: 4px 10px;">${tag}</span>
           `).join('')}
         </div>
 
-        <p class="rv-txt">${rv.text}</p>
+        <p class="rv-txt" style="font-size: 14px; line-height: 1.6; color: var(--g700);">${rv.text}</p>
       </div>
     `).join('');
   } else {
@@ -404,7 +404,6 @@ function openReview() {
   };
   renderStep();
   reviewOverlay.classList.add('active');
-  document.body.style.overflow = 'hidden';
 }
 
 function handleStarClick(type, val) {
@@ -514,12 +513,7 @@ function renderStep() {
 
 window.nextStep = () => { currentStep++; renderStep(); };
 window.prevStep = () => { currentStep--; renderStep(); };
-window.closeReview = () => { 
-  reviewOverlay.classList.remove('active');
-  if (!modal.classList.contains('active')) {
-    document.body.style.overflow = '';
-  }
-};
+window.closeReview = () => { reviewOverlay.classList.remove('active'); };
 window.submitReview = () => {
   // 실제 제출 데이터는 reviewDraft에 있음
   closeReview();
@@ -550,12 +544,7 @@ conditionChips.forEach(c => c.onclick = () => {
   render();
 });
 
-closeBtn.onclick = () => { 
-  modal.classList.remove('active'); 
-  if (!reviewOverlay.classList.contains('active')) {
-    document.body.style.overflow = ''; 
-  }
-};
+closeBtn.onclick = () => { modal.classList.remove('active'); document.body.style.overflow = ''; };
 
 // 모달 바깥쪽(오버레이) 클릭 시 닫기
 modal.onclick = (e) => {

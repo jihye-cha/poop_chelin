@@ -65,7 +65,6 @@ body {
   color: var(--g900);
   -webkit-font-smoothing: antialiased;
   line-height: 1.6;
-  overflow-x: hidden; /* Prevent horizontal sway */
 }
 button { font-family: var(--font-main); cursor: pointer; border: none; background: none; transition: 0.2s; }
 
@@ -85,17 +84,17 @@ button { font-family: var(--font-main); cursor: pointer; border: none; backgroun
 ───────────────────────────────────── */
 .app-bar {
   background: var(--white);
-  padding: 12px 20px;
+  padding: 16px 24px 12px;
   position: sticky; top:0; z-index:100;
   border-bottom: 1px solid var(--g100);
 }
-.ab-row { display:flex; align-items:center; justify-content:space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 8px; }
+.ab-row { display:flex; align-items:center; justify-content:space-between; margin-bottom: 12px; }
 .logo { display: flex; align-items: center; gap: 8px; }
 .logo-img { width: 60px; height: 60px; object-fit: contain; }
-.header-title { font-family: var(--font-point); font-size: 32px; color: var(--g900); font-weight: 700; line-height: 1.1; }
+.header-title { font-family: var(--font-point); font-size: 22px; color: var(--g900); font-weight: 700; }
 
-.ab-acts { display: flex; gap: 4px; margin-left: auto; } /* Push elements to right if wrapped */
-.ab-acts .chip { padding: 4px 10px; font-size: 12px; font-weight: 700; background: var(--bg-soft); color: var(--g700); border: 1px solid var(--g200); }
+.ab-acts { display: flex; gap: 8px; }
+.ab-acts .chip { padding: 6px 12px; font-size: 13px; font-weight: 700; background: var(--bg-soft); color: var(--g700); border: 1px solid var(--g200); }
 .ab-acts .chip:active { background: var(--g100); }
 
 .search-wrap {
@@ -237,9 +236,7 @@ button { font-family: var(--font-main); cursor: pointer; border: none; backgroun
 .bsheet {
   width: 100%; max-width: 540px; background: var(--white);
   border-radius: 32px 32px 0 0; transform: translateY(100%); transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  max-height: 92vh; overflow-y: auto; position: relative;
-  overflow-x: hidden; /* Prevent horizontal scroll sway */
-  box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+  max-height: 90vh; overflow-y: auto; position: relative;
 }
 .modal-overlay.active .bsheet { transform: translateY(0); }
 
@@ -305,15 +302,14 @@ button { font-family: var(--font-main); cursor: pointer; border: none; backgroun
 .ai-notice { font-size:11px; color:rgba(255,255,255,0.4); }
 .ai-txt { font-size:14px; color:rgba(255,255,255,0.9); line-height:1.6; }
 
-/* 유저 리뷰 카드형 디자인 (컴포넌트 중심 - 클로드 스타일) */
+/* 유저 리뷰 카드형 디자인 (컴포넌트 중심) */
 .rv-card {
   background: var(--white);
-  border-radius: var(--r-lg);
-  padding: 24px;
-  margin-bottom: 16px;
+  border-radius: var(--r-md);
+  padding: 16px;
+  margin-bottom: 12px;
   border: 1px solid var(--g100);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.03); 
-  display: flex; flex-direction: column; gap: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* 가벼운 그림자로 입체감 부여 */
 }
 
 .rv-top {
@@ -387,8 +383,8 @@ button { font-family: var(--font-main); cursor: pointer; border: none; backgroun
   border: 1px solid var(--g200); cursor: pointer; transition: 0.2s;
   box-shadow: var(--sh-sm);
 }
-.nkw.active.pos { background: var(--sig-g-bg); border-color: var(--sig-g-text); color: var(--sig-g-text); box-shadow: 0 4px 8px rgba(22, 101, 52, 0.1); }
-.nkw.active.neg { background: var(--sig-r-bg); border-color: var(--sig-r-text); color: var(--sig-r-text); box-shadow: 0 4px 8px rgba(153, 27, 27, 0.1); }
+.nkw.active.pos { background: var(--sig-g-bg); border-color: #A7F3D0; color: var(--sig-g-text); }
+.nkw.active.neg { background: var(--sig-r-bg); border-color: #FECACA; color: var(--sig-r-text); }
 
 @media (max-width: 600px) {
   .sheet-body { padding: 0 20px 32px; }
