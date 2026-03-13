@@ -298,10 +298,7 @@ function openDetail(item) {
   document.getElementById('modal-image').src = item.image;
   document.getElementById('modal-name').textContent = item.name;
   document.getElementById('modal-loc').textContent = `📍 ${item.location}`;
-  
-  // 화장실 경고 로직 (부정 키워드 2개 이상이거나 특정 키워드 포함 시)
-  const toiletWarning = item.toiletTags.negative.length >= 2 ? '<span class="badge r" style="margin-left:8px;">🚨 화장실 주의</span>' : '';
-  document.getElementById('modal-traffic-badge').innerHTML = getBadge(item.safetyLevel) + toiletWarning;
+  document.getElementById('modal-traffic-badge').innerHTML = getBadge(item.safetyLevel);
 
   document.getElementById('score-taste').textContent = item.scores.taste.toFixed(1);
   document.getElementById('score-toilet').textContent = item.scores.toilet.toFixed(1);
@@ -318,27 +315,18 @@ function openDetail(item) {
     menuTitle.innerHTML = '🏆 IBS 추천 메뉴 TOP 3';
     menuTitle.style.color = 'var(--g700)';
   }
-  menuList.innerHTML = item.topMenus.map((menu, i) => {
-    let tip = '';
-    // 설사형 유저를 위한 특수 팁 (식이섬유 관련)
-    if (menu.reason.includes('식이섬유') || menu.name.includes('비빔밥') || menu.name.includes('나물')) {
-      tip = '<p class="mb-warning" style="background:#FFF1F1; color:#D32F2F; padding:8px; border-radius:8px; margin-top:4px;">💡 설사형 유저는 과도한 식이섬유 섭취 시 장 자극이 올 수 있으니 양 조절에 유의하세요!</p>';
-    }
-
-    return `
-      <li class="mb-item" style="flex-direction:column; align-items:flex-start;">
-        <div style="display:flex; align-items:center; gap:8px; width:100%;">
-          <span style="font-weight:900; color:var(--gold-dark);">${i+1}</span>
-          <span class="mb-name">${menu.name}</span>
-          <span class="mb-reason">${menu.reason}</span>
-          <div style="margin-left:auto;">${getDot(menu.level)}</div>
-        </div>
-        ${menu.isCaveat ? `<p class="mb-warning">⚠️ 이 메뉴는 장 건강에 자극이 큽니다.</p>` : ''}
-        ${menu.isAlternative ? `<p class="mb-warning" style="color:var(--sig-g-text);">✅ 대체 가능한 안심 메뉴입니다.</p>` : ''}
-        ${tip}
-      </li>
-    `;
-  }).join('');
+  menuList.innerHTML = item.topMenus.map((menu, i) => `
+    <li class="mb-item" style="flex-direction:column; align-items:flex-start;">
+      <div style="display:flex; align-items:center; gap:8px; width:100%;">
+        <span style="font-weight:900; color:var(--gold-dark);">${i+1}</span>
+        <span class="mb-name">${menu.name}</span>
+        <span class="mb-reason">${menu.reason}</span>
+        <div style="margin-left:auto;">${getDot(menu.level)}</div>
+      </div>
+      ${menu.isCaveat ? `<p class="mb-warning">⚠️ 이 메뉴는 장 건강에 자극이 큽니다.</p>` : ''}
+      ${menu.isAlternative ? `<p class="mb-warning" style="color:var(--sig-g-text);">✅ 대체 가능한 안심 메뉴입니다.</p>` : ''}
+    </li>
+  `).join('');
 
   document.getElementById('modal-ai-summary').textContent = item.aiSummary;
   document.getElementById('modal-bookmark-btn').classList.toggle('active', bookmarks.includes(item.id));
@@ -573,7 +561,7 @@ function openMyPage() {
         <span class="stat-lbl">저장한 장소</span>
       </div>
       <div class="stat-item">
-        <span class="stat-val">${Math.floor(Math.random() * 5) + 3}</span>
+        <span class="stat-val">12</span>
         <span class="stat-lbl">작성한 리뷰</span>
       </div>
     </div>
