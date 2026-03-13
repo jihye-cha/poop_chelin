@@ -214,7 +214,6 @@ let searchTerm = '';
 let currentReviewFilter = 'all';
 let activeRestaurant = null;
 let currentStep = 1;
-let showOnlyScrapped = false;
 
 // --- Selectors ---
 const grid = document.getElementById('restaurant-grid');
@@ -228,13 +227,6 @@ const closeBtn = document.getElementById('modal-close-btn');
 function render() {
   grid.innerHTML = '';
   const bookmarks = JSON.parse(localStorage.getItem('poopMichelinBookmarks')) || [];
-  
-  const listTitle = document.getElementById('list-title');
-  if (showOnlyScrapped) {
-    listTitle.innerHTML = '📌 내 스크랩';
-  } else {
-    listTitle.innerHTML = '📍 내 주변 안심 맛집';
-  }
 
   const filtered = restaurants.filter(res => {
     // 장 안심도 필터 (다중 선택 OR 조건)
@@ -251,10 +243,7 @@ function render() {
       }
     });
 
-    // 스크랩 필터
-    const matchesScrap = !showOnlyScrapped || bookmarks.includes(res.id);
-
-    return matchesSafety && matchesSearch && matchesConditions && matchesScrap;
+    return matchesSafety && matchesSearch && matchesConditions;
   });
 
   filtered.forEach(item => {
@@ -440,20 +429,14 @@ function renderStep() {
     </div>
   `;
 
-  const kwMarkup = (category, list) => {
-    const pos = list.filter(k => k.type === 'pos');
-    const neg = list.filter(k => k.type === 'neg');
-    
-    const renderRow = (items) => items.map(kw => {
-      const isActive = (category === 'food' ? reviewDraft.foodKeywords : reviewDraft.toiletKeywords).has(kw.text);
-      return `<span class="nkw ${kw.type} ${isActive ? 'active' : ''}" onclick="toggleReviewKw('${category}', '${kw.text}')">#${kw.text}</span>`;
-    }).join('');
-
-    return `
-      <div class="kw-row" style="flex-wrap: wrap; margin-bottom: 8px;">${renderRow(pos)}</div>
-      <div class="kw-row" style="flex-wrap: wrap;">${renderRow(neg)}</div>
-    `;
-  };
+  const kwMarkup = (category, list) => `
+    <div class="kw-row" style="flex-wrap: wrap;">
+      ${list.map(kw => {
+        const isActive = (category === 'food' ? reviewDraft.foodKeywords : reviewDraft.toiletKeywords).has(kw.text);
+        return `<span class="nkw ${kw.type} ${isActive ? 'active' : ''}" onclick="toggleReviewKw('${category}', '${kw.text}')">#${kw.text}</span>`;
+      }).join('')}
+    </div>
+  `;
 
   const steps = [
     {
@@ -542,84 +525,7 @@ window.submitReview = () => {
   closeReview();
 };
 
-function openMyPage() {
-  const bookmarks = JSON.parse(localStorage.getItem('poopMichelinBookmarks')) || [];
-  const container = document.getElementById('mypage-container');
-  
-  container.innerHTML = `
-    <div class="profile-section">
-      <div class="profile-img"></div>
-      <div class="profile-info">
-        <h3>장튼튼 님</h3>
-        <p>평범한 직장인 | 설사형 유저</p>
-      </div>
-    </div>
-    
-    <div class="stats-grid">
-      <div class="stat-item">
-        <span class="stat-val">${bookmarks.length}</span>
-        <span class="stat-lbl">저장한 장소</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-val">12</span>
-        <span class="stat-lbl">작성한 리뷰</span>
-      </div>
-    </div>
-    
-    <div class="mypage-menu">
-      <div class="mp-item">
-        <span><span>🔔</span> 알림 설정</span>
-        <span>></span>
-      </div>
-      <div class="mp-item">
-        <span><span>📄</span> 공지사항</span>
-        <span>></span>
-      </div>
-      <div class="mp-item">
-        <span><span>📞</span> 고객센터</span>
-        <span>></span>
-      </div>
-    </div>
-  `;
-  
-  document.getElementById('mypage-modal-overlay').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeMyPage() {
-  document.getElementById('mypage-modal-overlay').classList.remove('active');
-  document.body.style.overflow = '';
-}
-
 // --- Event Listeners ---
-document.getElementById('scrap-btn').onclick = function() {
-  showOnlyScrapped = !showOnlyScrapped;
-  this.classList.toggle('active', showOnlyScrapped);
-  render();
-};
-
-document.getElementById('mypage-btn').onclick = openMyPage;
-document.getElementById('mypage-close-btn').onclick = closeMyPage;
-document.getElementById('mypage-modal-overlay').onclick = (e) => {
-  if (e.target.id === 'mypage-modal-overlay') closeMyPage();
-};
-
-document.querySelector('.logo').onclick = () => {
-  // 모든 상태 초기화
-  safetyFilters = new Set(['safe', 'caution', 'warning']);
-  conditionFilters = new Set();
-  searchTerm = '';
-  showOnlyScrapped = false;
-  
-  // UI 상태 업데이트
-  search.value = '';
-  safetyChips.forEach(c => c.classList.add('active'));
-  conditionChips.forEach(c => c.classList.remove('active'));
-  document.getElementById('scrap-btn').classList.remove('active');
-  
-  render();
-};
-
 search.oninput = (e) => { searchTerm = e.target.value.toLowerCase(); render(); };
 safetyChips.forEach(c => c.onclick = () => {
   const filter = c.dataset.filter;
