@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>똥슐랭 가이드 — Design v5.6</title>
+  <title>똥슐랭 가이드 Lite — v5.8</title>
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -12,28 +12,47 @@
   <header class="app-bar">
     <div class="ab-row">
       <div class="logo">
-        <div class="logo-mark">💩</div>
+        <img src="assets/pop_chelin_main_character.png" alt="똥슐랭 로고" class="logo-img">
         <span class="header-title">똥슐랭 가이드</span>
       </div>
       <div class="ab-acts">
-        <button class="chip" id="scrap-toggle-btn">📌 저장됨</button>
+        <button class="chip" id="scrap-btn">📌 스크랩</button>
+        <button class="chip" id="mypage-btn">👤 마이페이지</button>
       </div>
     </div>
     <div class="search-wrap">
       <span>🔍</span>
-      <input type="text" class="search-input" id="search-input" placeholder="식당 이름 또는 지역 검색">
+      <input type="text" class="search-input" id="search-input" placeholder="식당, 지역 또는 '마라탕' 검색">
     </div>
   </header>
 
-  <!-- FILTER BAR -->
-  <div class="filter-bar" id="filter-bar">
-    <button class="chip active" data-filter="all">전체</button>
-    <button class="chip" data-filter="safe">안심</button>
-    <button class="chip" data-filter="caution">보통</button>
-    <button class="chip" data-filter="warning">주의</button>
-    <div style="width:1px; height:20px; background:var(--g200); margin:0 4px; flex-shrink:0;"></div>
-    <button class="chip" data-filter="toilet-sep">남녀분리</button>
-    <button class="chip" data-filter="toilet-clean">청결도</button>
+  <!-- DOUBLE FILTER BAR -->
+  <section class="filter-section">
+    <div class="filter-container">
+      <div class="filter-label">장 편안함</div>
+      <div class="filter-row" id="filter-row-safety">
+        <button class="chip active" data-filter="safe">안심🟢</button>
+        <button class="chip active" data-filter="caution">보통🟡</button>
+        <button class="chip active" data-filter="warning">주의🔴</button>
+      </div>
+      <div class="filter-label">화장실 조건</div>
+      <div class="filter-row" id="filter-row-toilet">
+        <button class="chip" data-filter="toilet-sep">남녀분리</button>
+        <button class="chip" data-filter="toilet-clean">청결도 우수</button>
+        <button class="chip" data-filter="toilet-space">칸수 여유</button>
+        <button class="chip" data-filter="toilet-towel">핸드타올</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDITOR'S PICK BANNER -->
+  <div class="banner-container">
+    <div class="editor-banner">
+      <span class="eb-label">EDITOR'S PICK</span>
+      <h2 class="eb-title">장(腸)내 평화를 위한<br>이 에디터의 최애 맛집은?</h2>
+      <p class="eb-desc">화장실 동선까지 완벽한 곳만 골랐습니다.</p>
+      <div class="eb-emoji">✨</div>
+    </div>
   </div>
 
   <main class="main-content">
@@ -49,30 +68,26 @@
     <div class="bsheet" id="detail-bsheet">
       <button class="modal-close-btn" id="modal-close-btn">✕</button>
 
-      <div class="handle-area">
-        <div class="handle-bar"></div>
-      </div>
+      <!-- 상단 핸들 제거 (이미지가 채우므로) -->
       
       <div class="sheet-body">
         <!-- 상단 이미지 -->
         <img id="modal-image" class="modal-hero-img" src="" alt="식당 이미지">
 
         <!-- 타이틀 + 배지 + 북마크 -->
-        <div class="sh-title-row">
-          <div class="name-with-bm">
+        <div class="sh-title-row" style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+          <div class="name-with-bm" style="display:flex; align-items:center; gap:12px;">
             <h1 class="modal-name" id="modal-name">식당 이름</h1>
             <button class="bm-btn" id="modal-bookmark-btn">
               <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
             </button>
           </div>
-          <div id="modal-traffic-badge">
-            <!-- Flat Badge injected here -->
-          </div>
+          <div id="modal-traffic-badge"></div>
         </div>
-        <p class="card-meta" id="modal-loc" style="margin-top: -4px;">📍 위치 정보</p>
+        <p class="card-meta" id="modal-loc" style="margin-top:-4px; font-size:13px; color:var(--g500);">📍 위치 정보</p>
 
         <!-- ① 스코어 보드 -->
-        <div class="score-grid" style="margin-top: 24px;">
+        <div class="score-grid" style="margin-top:20px;">
           <div class="score-card">
             <div class="sc-lbl">🍽 맛 & 장 편안함</div>
             <div class="sc-val" id="score-taste">0.0</div>
@@ -83,44 +98,37 @@
           </div>
         </div>
 
-        <!-- ② IBS 추천 메뉴 TOP 3 (or Caution Guide) -->
-        <h3 class="section-title">🏆 IBS 추천 메뉴 TOP 3</h3>
+        <!-- ② 장 편안함 키워드 (Food Tags 전용) -->
+        <h3 class="section-title">🍽 장 편안함 키워드</h3>
+        <div class="kw-cloud" id="modal-food-keywords"></div>
+
+        <!-- ③ IBS 메뉴 섹션 (동적 타이틀) -->
+        <h3 class="section-title" id="modal-menu-title">🏆 IBS 추천 메뉴 TOP 3</h3>
         <div class="menu-box">
-          <ul id="modal-menu-list" style="list-style:none;">
-            <!-- Menu items with dots injected here -->
-          </ul>
+          <ul id="modal-menu-list" style="list-style:none;"></ul>
         </div>
 
-        <!-- ③ 화장실 키워드 (Coupled only with toilet data) -->
-        <h3 class="section-title">🚽 화장실 키워드</h3>
-        <div class="kw-cloud" id="modal-keywords">
-          <!-- Keywords injected here -->
-        </div>
+        <!-- ④ 화장실 키워드 (Toilet Tags 전용) -->
+        <h3 class="section-title">🚽 화장실 상세 지표</h3>
+        <div class="kw-cloud" id="modal-toilet-keywords"></div>
 
-        <!-- ④ AI 요약 섹션 -->
+        <!-- ⑤ AI 요약 -->
         <h3 class="section-title">✨ AI 한 줄 요약</h3>
         <div class="ai-box">
-          <div class="ai-top">
-            <div class="ai-badge">AI 분석</div>
-            <span class="ai-notice">※ 실제 정보와 차이가 있을 수 있습니다</span>
-          </div>
-          <div class="ai-txt" id="modal-ai-summary">
-            리뷰 데이터를 분석 중입니다...
-          </div>
+          <p class="ai-notice">※ 리뷰 데이터 기반 자동 분석</p>
+          <div class="ai-txt" id="modal-ai-summary">분석 중...</div>
         </div>
 
-        <!-- ⑤ 유저 리뷰 리스트 + 필터 -->
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; margin-top:32px;">
-          <h3 class="section-title" id="review-title" style="margin-bottom:0;">💬 유저 리뷰</h3>
-          <div id="review-filter-wrap" style="display:flex; gap:6px;">
-            <button class="chip active" style="padding:4px 10px; font-size:11px;" data-type="all">전체</button>
-            <button class="chip" style="padding:4px 10px; font-size:11px;" data-type="설사형">💨 설사형</button>
-            <button class="chip" style="padding:4px 10px; font-size:11px;" data-type="변비형">🪨 변비형</button>
+        <!-- ⑥ 리뷰 리스트 -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin:32px 0 16px;">
+          <h3 class="section-title" style="margin:0;">💬 유저 리뷰</h3>
+          <div class="rv-filter-wrap" id="review-filter-wrap">
+            <button class="chip active" data-type="all">전체</button>
+            <button class="chip" data-type="설사형">💨 설사형</button>
+            <button class="chip" data-type="변비형">🪨 변비형</button>
           </div>
         </div>
-        <div id="modal-reviews">
-          <!-- reviews injected here -->
-        </div>
+        <div id="modal-reviews"></div>
       </div>
 
       <!-- 하단 플로팅 버튼 -->
@@ -130,10 +138,14 @@
     </div>
   </div>
 
-  <!-- REVIEW SUBMISSION MODAL (4-Step Mockup) -->
+  <!-- 4-STEP REVIEW MODAL -->
   <div class="modal-overlay" id="review-modal-overlay">
-    <div class="bsheet" id="review-steps-container" style="padding:40px 24px;">
-      <!-- Steps injected by renderReviewStep() -->
+    <div class="bsheet" id="review-bsheet">
+      <button class="modal-close-btn" id="review-close-btn">✕</button>
+      <div class="handle-area"><div class="handle-bar"></div></div>
+      <div class="sheet-body" id="review-steps-container">
+        <!-- JS로 주입 -->
+      </div>
     </div>
   </div>
 
