@@ -6,30 +6,30 @@ const restaurants = [
     name: "오가네 한식뷔페",
     location: "서울 성수동 · 380m",
     image: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&q=80&w=800",
-    safetyLevel: "caution",
+    safetyLevel: "safe",
     scores: { taste: 4.7, toilet: 4.5 },
     category: "한식",
     topMenus: [
-      { name: "된장찌개", level: "caution", reason: "마늘/양파/대파 등 고포드맵 함유" },
-      { name: "나물 비빔밥", level: "safe", reason: "고식이섬유 (설사형 유저 주의)" },
-      { name: "제육볶음", level: "warning", reason: "고지방 & 캡사이신 포함" }
+      { name: "된장찌개", level: "safe", reason: "저염 담백" },
+      { name: "나물 비빔밥", level: "safe", reason: "식이섬유 풍부" },
+      { name: "제육볶음", level: "caution", reason: "기름기 있음" }
     ],
     foodTags: {
-      positive: [{ text: "간조절가능", count: 42 }, { text: "소화잘됨", count: 56 }],
-      negative: [{ text: "마늘다수", count: 88 }]
+      positive: [{ text: "저포드맵", count: 88 }, { text: "간이심심함", count: 42 }, { text: "소화잘됨", count: 56 }],
+      negative: []
     },
     toiletTags: {
       positive: [{ text: "남녀분리", count: 42 }, { text: "매장내부", count: 31 }, { text: "청결도 우수", count: 28 }],
       negative: [{ text: "방음취약", count: 9 }]
     },
-    aiSummary: "한식 특성상 기본 양념에 마늘과 양파가 포함되어 있어 민감한 유저에겐 '안심'보다는 '주의'가 필요합니다. 죽이나 간이 약한 나물 위주를 권장합니다.",
+    aiSummary: "전체적으로 간이 심심하고 저포드맵 식재료 위주라 민감한 장에 아주 편안합니다. 화장실도 매장 내부 남녀 분리라 안심하고 방문 가능해요.",
     reviews: [
       { 
         id: 101, 
         user: "장민감", 
         type: "설사형", 
         date: "2025.08.12", 
-        text: "여기 된장찌개는 맛있지만 마늘이 많이 들어가서 조금 조심해야 해요. 화장실은 정말 좋습니다.",
+        text: "여기 된장찌개는 먹고 나서 속이 정말 편해요. 화장실도 깨끗해서 단골입니다.",
         rating: { taste: 5.0, toilet: 4.0 },
         selectedTags: ["맛있어요", "속이편해요", "깨끗해요"]
       }
@@ -44,26 +44,26 @@ const restaurants = [
     scores: { taste: 4.2, toilet: 3.1 },
     category: "중식",
     topMenus: [
-      { name: "마라탕 (0단계)", level: "caution", reason: "사골/향신료 베이스 자극 소량" },
-      { name: "꿔바로우", level: "warning", reason: "고지방 튀김 & 설탕 시럽" },
-      { name: "계란 볶음밥", level: "safe", reason: "자극이 가장 적은 안심 대안", isAlternative: true }
+      { name: "마라탕 (3단계)", level: "warning", reason: "매우 자극적임", isCaveat: true },
+      { name: "꿔바로우", level: "warning", reason: "기름진 당분", isCaveat: true },
+      { name: "볶음밥 (순한맛)", level: "safe", reason: "그나마 안전한 대안", isAlternative: true }
     ],
     foodTags: {
-      positive: [{ text: "단계조절", count: 120 }],
-      negative: [{ text: "캡사이신폭발", count: 95 }, { text: "고지방", count: 68 }, { text: "맵기조절주의", count: 42 }]
+      positive: [{ text: "가성비", count: 120 }],
+      negative: [{ text: "자극적임", count: 95 }, { text: "기름기많음", count: 68 }, { text: "맵기조절주의", count: 42 }]
     },
     toiletTags: {
       positive: [{ text: "칸수 여유", count: 12 }],
       negative: [{ text: "남녀공용", count: 55 }, { text: "비누없음", count: 12 }, { text: "청결도 아쉽", count: 34 }]
     },
-    aiSummary: "고농도 캡사이신과 고지방 성분이 장 수축을 유발해 급성 설사를 일으킬 위험이 큽니다. 가급적 맑은 국물을 선택하세요.",
+    aiSummary: "자극적인 향신료와 기름기가 많아 장 트러블 위험이 높습니다. 화장실도 공용인 점을 반드시 고려하세요.",
     reviews: [
       { 
         id: 201, 
         user: "마라러버", 
         type: "설사형", 
         date: "2025.07.20", 
-        text: "맛있지만 다음날 화장실에서 살았습니다... 0단계도 기름지긴 해요.",
+        text: "맛있지만 다음날 화장실에서 살았습니다... 맵기 조절 필수예요.",
         rating: { taste: 4.0, toilet: 2.0 },
         selectedTags: ["자극적이에요", "기름져요", "공용화장실"]
       }
@@ -78,26 +78,26 @@ const restaurants = [
     scores: { taste: 4.1, toilet: 4.9 },
     category: "샐러드",
     topMenus: [
-      { name: "모둠 채소 포케", level: "safe", reason: "변비형 유저 권장 (고식이섬유)" },
-      { name: "연어 샐러드", level: "safe", reason: "오메가3 & 저지방 단백질" },
-      { name: "호두 당근 라페", level: "caution", reason: "FODMAP(당근) & 견과류 주의" }
+      { name: "모둠 채소 포케", level: "safe", reason: "고식이섬유" },
+      { name: "구운 두부 샐러드", level: "safe", reason: "식물성 단백질" },
+      { name: "호두 당근 라페", level: "caution", reason: "견과류 알러지 주의" }
     ],
     foodTags: {
-      positive: [{ text: "신선함", count: 42 }, { text: "청결도 우수", count: 88 }, { text: "섬유질 가득", count: 95 }],
+      positive: [{ text: "저포드맵", count: 42 }, { text: "청결도 우수", count: 88 }, { text: "섬유질 가득", count: 95 }],
       negative: []
     },
     toiletTags: {
       positive: [{ text: "청결도 우수", count: 92 }, { text: "핸드타올 비치", count: 45 }, { text: "여성용품 구비", count: 15 }],
       negative: []
     },
-    aiSummary: "변비형 유저에겐 최고의 식이섬유 구성이나, 설사형 유저는 생채소 과다 섭취 시 복부 팽만감을 느낄 수 있으니 익힌 채소 위주로 드세요.",
+    aiSummary: "변비형 유저에게 강력 추천하는 고식이섬유 구성입니다. 화장실 청결도와 편의시설이 호텔급으로 우수합니다.",
     reviews: [
       { 
         id: 301, 
         user: "변비탈출", 
         type: "변비형", 
         date: "2025.09.01", 
-        text: "변비에 최고입니다. 화장실도 너무 깨끗해서 대만족이에요.",
+        text: "여기 샐러드 먹고 드디어 광명을 찾았습니다. 화장실도 너무 깨끗해서 편해요.",
         rating: { taste: 5.0, toilet: 5.0 },
         selectedTags: ["신선해요", "쾌변도움", "완벽위생"]
       }
@@ -112,9 +112,9 @@ const restaurants = [
     scores: { taste: 4.5, toilet: 4.2 },
     category: "한식/죽",
     topMenus: [
-      { name: "흰죽/야채죽", level: "safe", reason: "저자극 유동식의 정석" },
-      { name: "단호박죽", level: "safe", reason: "부드러운 식이섬유" },
-      { name: "낙지김치죽", level: "caution", reason: "고춧가루 자극 고려 (주의 필요)" }
+      { name: "흰죽/야채죽", level: "safe", reason: "가장 편안한 유동식" },
+      { name: "단호박죽", level: "safe", reason: "식이섬유 부드러움" },
+      { name: "낙지김치죽", level: "warning", reason: "매운맛 자극 주의" }
     ],
     foodTags: {
       positive: [{ text: "속편함", count: 56 }, { text: "간조절가능", count: 24 }],
@@ -124,14 +124,14 @@ const restaurants = [
       positive: [{ text: "남녀분리", count: 18 }, { text: "청결함", count: 22 }],
       negative: [{ text: "1인용대기", count: 15 }]
     },
-    aiSummary: "장 플레어(flare) 시기에 가장 추천하는 식당입니다. 쌀죽 베이스라 포드맵 함량이 매우 낮아 안심하고 방문하실 수 있습니다.",
+    aiSummary: "장이 예민한 날 최고의 선택지입니다. 전 메뉴 간 조절이 가능하며, 화장실은 1인용이라 대기가 있을 수 있지만 관리가 매우 잘 되어 있습니다.",
     reviews: [
       { 
         id: 401, 
         user: "죽돌이", 
         type: "설사형", 
         date: "2025.09.10", 
-        text: "탈 났을 때 생명줄 같은 곳입니다. 간 조절도 해주셔서 너무 감사해요.",
+        text: "배탈 났을 때 여기 죽 만한 게 없어요. 간도 조절해주셔서 좋습니다.",
         rating: { taste: 4.5, toilet: 4.0 },
         selectedTags: ["속편해요", "친절해요", "관리잘됨"]
       }
@@ -146,26 +146,26 @@ const restaurants = [
     scores: { taste: 4.3, toilet: 3.8 },
     category: "양식",
     topMenus: [
-      { name: "알리오올리오", level: "caution", reason: "마늘 오일 (프럭탄 용출 주의)" },
-      { name: "까르보나라", level: "warning", reason: "고지방 유제품 & 유당" },
-      { name: "토마토 파스타", level: "caution", reason: "시판 소스의 양파/마늘 함량" }
+      { name: "알리오올리오", level: "safe", reason: "유제품 미포함" },
+      { name: "까르보나라", level: "warning", reason: "고지방 유제품 주의" },
+      { name: "토마토 리조또", level: "caution", reason: "마늘/양파 함량 높음" }
     ],
     foodTags: {
-      positive: [{ text: "면익힘선택", count: 21 }],
-      negative: [{ text: "마늘다수", count: 32 }, { text: "유제품함유", count: 19 }]
+      positive: [{ text: "재료신선", count: 21 }],
+      negative: [{ text: "마늘다수", count: 32 }, { text: "느끼함", count: 19 }]
     },
     toiletTags: {
       positive: [{ text: "건물공용", count: 45 }, { text: "핸드타올", count: 12 }],
       negative: [{ text: "남녀공용", count: 8 }]
     },
-    aiSummary: "밀가루(글루텐)와 마늘이 주재료인 양식은 가스 팽만을 유발할 수 있습니다. 마늘을 충분히 제거한 오일 파스타를 추천합니다.",
+    aiSummary: "오일 베이스 파스타는 비교적 안전하나 크림/치즈류는 주의가 필요합니다. 화장실은 건물 공용이지만 도어락이 있어 외부인 출입이 제한됩니다.",
     reviews: [
       { 
         id: 501, 
         user: "파스타광", 
         type: "변비형", 
         date: "2025.10.05", 
-        text: "맛있지만 밀가루라 그런지 배가 빵빵해지긴 합니다. 화장실은 깨끗해요.",
+        text: "알리오올리오가 참 깔끔해요. 화장실은 건물 공용이라 조금 걸어야 해요.",
         rating: { taste: 4.0, toilet: 3.5 },
         selectedTags: ["맛있어요", "깔끔해요", "건물화장실"]
       }
@@ -180,26 +180,26 @@ const restaurants = [
     scores: { taste: 4.8, toilet: 2.5 },
     category: "한식/구이",
     topMenus: [
-      { name: "소곱창 구이", level: "warning", reason: "고지방 지질에 의한 장 수축 유발" },
-      { name: "곱창 전골", level: "warning", reason: "맵고 짠 고포드맵 소스 복합" },
-      { name: "염통 구이", level: "caution", reason: "그나마 기름기가 적은 단백질 부위" }
+      { name: "소곱창 구이", level: "warning", reason: "고지방/기름기 과다" },
+      { name: "곱창 전골", level: "warning", reason: "매운맛/고지방 복합" },
+      { name: "볶음밥", level: "caution", reason: "기름기 조절 필요" }
     ],
     foodTags: {
-      positive: [{ text: "초벌구이", count: 92 }],
-      negative: [{ text: "기름기폭발", count: 84 }, { text: "고지방", count: 41 }]
+      positive: [{ text: "맛있음", count: 92 }],
+      negative: [{ text: "기름기폭발", count: 84 }, { text: "과식유발", count: 41 }]
     },
     toiletTags: {
       positive: [],
       negative: [{ text: "매장외부", count: 52 }, { text: "노후시설", count: 38 }, { text: "비누없음", count: 21 }]
     },
-    aiSummary: "고지방 육류와 기름진 곱창은 장 민감군에게 '지질 유발성 설사'를 일으키기 쉽습니다. 특히 화장실 접근성이 좋지 않으니 주의가 필요합니다.",
+    aiSummary: "맛은 훌륭하지만 장 안심도는 최하위권입니다. 고지방과 기름진 성분이 설사를 유발할 수 있으며 화장실 시설이 열악해 응급 상황 대처가 어렵습니다.",
     reviews: [
       { 
         id: 601, 
         user: "곱창킬러", 
         type: "설사형", 
         date: "2025.10.12", 
-        text: "정말 맛있지만 먹고 나면 화장실에서 살아야 해요. 각오하고 드셔야 합니다.",
+        text: "맛있어서 포기 못하지만... 먹고 나면 항상 고생합니다. 화장실은 정말 비추예요.",
         rating: { taste: 5.0, toilet: 1.5 },
         selectedTags: ["존맛탱", "기름져요", "화장실최악"]
       }
@@ -311,19 +311,16 @@ function openDetail(item) {
 
   const menuTitle = document.getElementById('modal-menu-title');
   const menuList = document.getElementById('modal-menu-list');
-  
-  // 무조건 [🏆 IBS 추천 메뉴 TOP 3]로 통일
-  menuTitle.innerHTML = '🏆 IBS 추천 메뉴 TOP 3';
-  menuTitle.style.color = 'var(--g700)';
-
-  // 안전 등급 순으로 정렬 (safe > caution > warning)
-  const sortedMenus = [...item.topMenus].sort((a, b) => {
-    const order = { safe: 0, caution: 1, warning: 2 };
-    return order[a.level] - order[b.level];
-  });
-
-  menuList.innerHTML = sortedMenus.map((menu, i) => {
+  if (item.safetyLevel === 'warning') {
+    menuTitle.innerHTML = '🚨 IBS 주의 메뉴 가이드';
+    menuTitle.style.color = 'var(--sig-r-text)';
+  } else {
+    menuTitle.innerHTML = '🏆 IBS 추천 메뉴 TOP 3';
+    menuTitle.style.color = 'var(--g700)';
+  }
+  menuList.innerHTML = item.topMenus.map((menu, i) => {
     let tip = '';
+    // 설사형 유저를 위한 특수 팁 (식이섬유 관련)
     if (menu.reason.includes('식이섬유') || menu.name.includes('비빔밥') || menu.name.includes('나물')) {
       tip = '<p class="mb-warning" style="background:#FFF1F1; color:#D32F2F; padding:8px; border-radius:8px; margin-top:4px;">💡 설사형 유저는 과도한 식이섬유 섭취 시 장 자극이 올 수 있으니 양 조절에 유의하세요!</p>';
     }
@@ -344,14 +341,7 @@ function openDetail(item) {
   }).join('');
 
   document.getElementById('modal-ai-summary').textContent = item.aiSummary;
-  
-  // 북마크 상태 반영 및 클릭 이벤트 연결
-  const mbBtn = document.getElementById('modal-bookmark-btn');
-  mbBtn.classList.toggle('active', bookmarks.includes(item.id));
-  mbBtn.onclick = () => {
-    toggleBM(item.id);
-    mbBtn.classList.toggle('active', JSON.parse(localStorage.getItem('poopMichelinBookmarks')).includes(item.id));
-  };
+  document.getElementById('modal-bookmark-btn').classList.toggle('active', bookmarks.includes(item.id));
 
   renderReviews();
   modal.classList.add('active');
